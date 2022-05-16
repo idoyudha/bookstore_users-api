@@ -5,12 +5,15 @@ package users
 
 import (
 	"bookstore_users-api/datasources/mysql/users_db"
+	"bookstore_users-api/utils/date_utils"
 	"bookstore_users-api/utils/errors"
 	"fmt"
+	"strings"
 )
 
 const (
-	queryInsertUser = "INSERT INTO users(first_name, last_name, email, date_created) VALUES(?, ?, ?, ?);"
+	indexUniqueEmail = "email_UNIQUE"
+	queryInsertUser  = "INSERT INTO users(first_name, last_name, email, date_created) VALUES(?, ?, ?, ?);"
 )
 
 var (
@@ -43,8 +46,14 @@ func (user *User) Save() *errors.RestErr {
 	}
 	defer stmt.Close() // close connection
 
+	user.DateCreated = date_utils.GetNowString()
+
 	insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Email, user.DateCreated)
 	if saveErr != nil {
+		if strings.Contains(err.Error(), indexUniqueEmail) {
+			return errors.NewBadRequestError(
+				fmt.Sprintf("email %s already exist", user.Email))
+		}
 		return errors.NewInternalServerError(
 			fmt.Sprintf("error when trying to save user: %s", saveErr.Error()))
 	}

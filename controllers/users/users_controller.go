@@ -3,7 +3,6 @@ package users
 import (
 	"bookstore_users-api/domain/users"
 	"bookstore_users-api/services"
-	"bookstore_users-api/utils/errors"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -12,13 +11,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/idoyudha/bookstore_oauth-go/oauth"
+	"github.com/idoyudha/bookstore_utils-go/rest_errors"
 )
 
-func getUserId(userIdParam string) (int64, *errors.RestErr) {
+func getUserId(userIdParam string) (int64, *rest_errors.RestErr) {
 	// take userid from url
 	userId, userErr := strconv.ParseInt(userIdParam, 10, 64)
 	if userErr != nil {
-		return 0, errors.NewBadRequestError("user id should be a number")
+		return 0, rest_errors.NewBadRequestError("user id should be a number")
 	}
 	return userId, nil
 }
@@ -36,7 +36,7 @@ func Create(c *gin.Context) {
 
 	if err := json.Unmarshal(bytes, &user); err != nil {
 		// Handle JSON error bad request
-		restErr := errors.NewBadRequestError("invalid json body")
+		restErr := rest_errors.NewBadRequestError("invalid json body")
 		c.JSON(restErr.Status, restErr)
 		return
 	}
@@ -95,7 +95,7 @@ func Update(c *gin.Context) {
 	// take json body
 	var user users.User
 	if err := c.ShouldBindJSON(&user); err != nil {
-		restErr := errors.NewBadRequestError("invalid json body")
+		restErr := rest_errors.NewBadRequestError("invalid json body")
 		c.JSON(restErr.Status, restErr)
 		return
 	}
@@ -140,7 +140,7 @@ func Search(c *gin.Context) {
 func Login(c *gin.Context) {
 	var request users.LoginRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
-		restErr := errors.NewBadRequestError("invalid json body")
+		restErr := rest_errors.NewBadRequestError("invalid json body")
 		c.JSON(restErr.Status, restErr)
 		return
 	}

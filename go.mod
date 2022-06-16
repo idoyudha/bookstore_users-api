@@ -16,7 +16,7 @@ require (
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/idoyudha/bookstore_oauth-go v0.0.0-20220601124902-b5e5cdd42503 // indirect
-	github.com/idoyudha/bookstore_utils-go v0.0.0-20220601160254-f23915b81956 // indirect
+	github.com/idoyudha/bookstore_utils-go v0.0.0-20220616094424-985fb18ab72f // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

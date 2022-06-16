@@ -1,9 +1,8 @@
 package app
 
 import (
-	"bookstore_users-api/logger"
-
 	"github.com/gin-gonic/gin"
+	"github.com/idoyudha/bookstore_utils-go/logger"
 )
 
 var (

@@ -6,12 +6,12 @@ package users
 
 import (
 	"bookstore_users-api/datasources/mysql/users_db"
-	"bookstore_users-api/logger"
 	"bookstore_users-api/utils/mysql_utils"
 	"errors"
 	"fmt"
 	"strings"
 
+	"github.com/idoyudha/bookstore_utils-go/logger"
 	"github.com/idoyudha/bookstore_utils-go/rest_errors"
 )
 
